@@ -11,6 +11,7 @@ class Program
     https://www.geeksforgeeks.org/breadth-first-traversal-bfs-on-a-2d-array/
     https://www.w3schools.com/python/ref_list_sort.asp
     https://learn.microsoft.com/cs-cz/dotnet/api/system.collections.queue?view=net-7.0
+    poznámka: nejake casti kodu se opakuji kvuli podobnemu algoritmu. Odkaz na inspiraci bude teda u jedne casti kodu to nemusim delat porad.
     */
 
     // proměná pro zadání
@@ -94,8 +95,9 @@ class Program
                     break;
                 //mod 3
                 case ConsoleKey.D3:
-                case ConsoleKey.NumPad3 :
+                case ConsoleKey.NumPad3:
                     List<List<(int, int)>> cesty = ViceCest(kockaX, kockaY, hracky);
+                    // sort pomoc https://www.w3schools.com/python/ref_list_sort.asp
                     cesty.Sort((path1, path2) => path1.Count.CompareTo(path2.Count));
                     int pocet_cest = 1;
 
@@ -121,9 +123,16 @@ class Program
         }
     }
     //mod 2
+
+    /* 
+     
+    nejvetsi inspirace algoritmu z https://www.geeksforgeeks.org/breadth-first-traversal-bfs-on-a-2d-array/
+        
+    */
     static List<(int, int)> MapaCesty(int startX, int startY, int hrackaX, int hrackaY)
     {
         // queue ma v sobe prave overovene policko
+        // queue pomoc https://learn.microsoft.com/cs-cz/dotnet/api/system.collections.queue?view=net-7.0
         Queue<(int, int)> queue = new Queue<(int, int)>();
         queue.Enqueue((startX, startY));
         // zachovava zaznam cesty
