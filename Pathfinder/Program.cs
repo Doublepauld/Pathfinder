@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 class Program
 {
@@ -23,12 +24,12 @@ class Program
     {
         {'#', '.', '.', '.', '#', '.', '.', '.', '#', '.', '.', '.', '.'},
         {'#', '.', '.', '.', '#', '.', '.', '.', '#', '.', '.', '.', '.'},
-        {'#', '.', 'H', '.', '#', '.', 'H', '.', '#', '.', '.', '.', '.'},
         {'#', '.', '.', '.', '#', '.', '.', '.', '#', '.', '.', '.', '.'},
-        {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'},
+        {'#', '.', '.', '.', '#', '.', '.', '.', '#', '.', '.', '.', '.'},
+        {'.', '.', '.', '.', '.', '.', 'H', '.', '.', '.', '.', '.', '.'},
+        {'#', '.', '.', 'K', '#', '.', '.', '.', '#', '.', '.', '.', '.'},
         {'#', '.', '.', '.', '#', '.', '.', '.', '#', '.', '.', '.', '.'},
         {'#', '.', 'K', '.', '#', '.', '.', '.', '#', '.', '.', '.', '.'},
-        {'#', '.', '.', '.', '#', '.', '.', '.', '#', '.', 'H', '.', '.'},
         {'#', '.', '.', '.', '#', '.', '.', '.', '#', '.', '.', '.', '.'}
     };
 
@@ -41,6 +42,7 @@ class Program
         int hrackaY = -1;
         List<(int, int)> hracky = new List<(int, int)>();
         bool cmd = true;
+        int kockaCount = 0;
 
         for (int i = 0; i < mapa.GetLength(0); i++)
         {
@@ -52,6 +54,7 @@ class Program
                 {   // kocka je vzdy jenom jedna
                     kockaX = i;
                     kockaY = j;
+                    kockaCount++;
                 }
                 else if (ted == 'H') 
                 {   //promene pro 1/2 mód 
@@ -65,6 +68,12 @@ class Program
                 }
             }
         }
+        // pokud vic jak jedna kocka ukoncit proces
+        if (kockaCount>1) 
+        {
+            Console.WriteLine("vic jak jedna kocka");
+            return;
+        }
         //basic user interface pro lepsi testovani a outupu
         while (cmd)
         {
@@ -76,7 +85,15 @@ class Program
             {   // mod 1
                 case ConsoleKey.D1 :
                 case ConsoleKey.NumPad1 :
-                    Console.WriteLine(JeCestaNeboNe(kockaX, kockaY, hrackaX, hrackaY));
+                    bool odpoved = JeCestaNeboNe(kockaX, kockaY, hrackaX, hrackaY);
+                    if (odpoved)
+                    {
+                        Console.WriteLine("ANO");
+                    }
+                    else
+                    {
+                        Console.WriteLine("NE");
+                    }
                     break;
                 // mod 2
                 case ConsoleKey.D2:
@@ -86,11 +103,22 @@ class Program
 
                     if (cesta != null)
                     {
-
-                        foreach (var bod in cesta)
+                        //posledni koordinace
+                        int posledni = cesta.Count - 1; 
+                        for (int i = 0; i < cesta.Count; i++)
                         {
-                            Console.WriteLine($"{bod.Item1}x{bod.Item2}");
+                            
+                            var bod = cesta[i];
+                            //vypsani souradnice
+                            Console.Write($"{bod.Item1}x{bod.Item2}");
+
+                           
+                            if (i != posledni)
+                            {
+                                Console.Write(", ");
+                            }
                         }
+                        Console.WriteLine();
                     }
                     else
                     {
@@ -101,22 +129,43 @@ class Program
                 case ConsoleKey.D3:
                 case ConsoleKey.NumPad3:
                     List<List<(int, int)>> cesty = ViceCest(kockaX, kockaY, hracky);
-                    // sort pomoc https://www.w3schools.com/python/ref_list_sort.asp
-                    cesty.Sort((path1, path2) => path1.Count.CompareTo(path2.Count));
-                    int pocet_cest = 1;
+                   
+                    if (cesty != null)
+                    {
+                        // sort pomoc https://www.w3schools.com/python/ref_list_sort.asp
+                        cesty.Sort((path1, path2) => path1.Count.CompareTo(path2.Count));
+                    }
+
 
                     if (cesty != null)
                     {
-                        foreach (var path in cesty)
+                        // ulozeni indexu posledni cesty
+                        int poslednicesta = cesty.Count - 1; 
+                        for (int j = 0; j < cesty.Count; j++)
                         {
-                            Console.WriteLine($"cesta {pocet_cest}");
-                            pocet_cest++;
-                            foreach (var bod in path)
+                            var path = cesty[j];
+                            //ulozeni indexu posledni souradnice
+                            int posledni = path.Count - 1; 
+                            for (int i = 0; i < path.Count; i++)
                             {
-                                Console.WriteLine($"{bod.Item1}x{bod.Item2}");
+                                var bod = path[i];
+                                Console.Write($"{bod.Item1}x{bod.Item2}");
+
+                                
+                                if (i != posledni)
+                                {
+                                    Console.Write(", ");
+                                }
                             }
+
                             
+                            if (j != poslednicesta)
+                            {
+                                Console.Write(" | ");
+                            }
                         }
+                        Console.Write('.');
+                        Console.WriteLine(); 
                     }
                     else
                     {
@@ -289,6 +338,10 @@ class Program
                     }
                 }
             }
+        }
+        if (paths.Count == 0)
+        {
+            return null;
         }
 
         return paths;
