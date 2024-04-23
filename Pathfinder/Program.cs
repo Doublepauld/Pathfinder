@@ -16,7 +16,7 @@ class Program
     https://learn.microsoft.com/cs-cz/dotnet/api/system.collections.queue?view=net-7.0
     https://www.youtube.com/watch?v=-L-WgKMFuhE&t=497s
     chat gpt bylo pouzito napric kodem pro jeho přehleduplnost a lehčí úpravy
-    poznámka: nejake casti kodu se opakuji kvuli podobnemu algoritmu. Odkaz na inspiraci bude teda u jedne casti kodu to nemusim delat vsude.
+    poznámka: nejake casti kodu se opakuji kvuli podobnemu algoritmu. Odkaz na inspiraci bude teda u jedne casti kodu at to nemusim delat vsude.
     */
 
     // proměná pro zadání
