@@ -4,14 +4,18 @@ using System.Collections.Generic;
 class Program
 {
     /* zdroje:
+    tady jsou vsechny zdroje nejake jsem pro kod vubec nepouzil ale pro pochopeni pathfind algoritmu atd.  Pak jsou jeste u casti v kodu presne zdroje
     https://www.youtube.com/watch?v=-L-WgKMFuhE
     https://en.wikipedia.org/wiki/Pathfinding
     https://en.wikipedia.org/wiki/Breadth-first_search
     https://www.youtube.com/watch?v=HZ5YTanv5QE
+    https://www.youtube.com/watch?v=XU_ugVTSjSE&t=5s
     https://www.geeksforgeeks.org/breadth-first-traversal-bfs-on-a-2d-array/
     https://www.w3schools.com/python/ref_list_sort.asp
     https://learn.microsoft.com/cs-cz/dotnet/api/system.collections.queue?view=net-7.0
-    poznámka: nejake casti kodu se opakuji kvuli podobnemu algoritmu. Odkaz na inspiraci bude teda u jedne casti kodu to nemusim delat porad.
+    https://www.youtube.com/watch?v=-L-WgKMFuhE&t=497s
+    chat gpt bylo pouzito napric kodem pro jeho přehleduplnost a lehčí úpravy
+    poznámka: nejake casti kodu se opakuji kvuli podobnemu algoritmu. Odkaz na inspiraci bude teda u jedne casti kodu to nemusim delat vsude.
     */
 
     // proměná pro zadání
@@ -126,7 +130,8 @@ class Program
 
     /* 
      
-    nejvetsi inspirace algoritmu z https://www.geeksforgeeks.org/breadth-first-traversal-bfs-on-a-2d-array/
+    nejvetsi inspirace algoritmů z https://www.geeksforgeeks.org/breadth-first-traversal-bfs-on-a-2d-array/
+                                   https://www.youtube.com/watch?v=XU_ugVTSjSE&t=5s
         
     */
     static List<(int, int)> MapaCesty(int startX, int startY, int hrackaX, int hrackaY)
